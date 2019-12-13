@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -105,9 +107,18 @@ public class MainActivity extends AppCompatActivity {
 
             // Add a marker in Sydney and move the camera
             LatLng kd = new LatLng(21.946308, 120.793959);
-            MainActivity.this.googleMap.addMarker(new MarkerOptions().position(kd).title("Marker in KD"));
-            MainActivity.this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(kd));
-            MainActivity.this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(kd, 14f));
+            googleMap.addMarker(new MarkerOptions().position(kd).title("Marker in KD"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(kd));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(kd, 14f));
+
+            googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+                    Log.v("brad", "zoom : " + cameraPosition.zoom);
+                }
+            });
+
+
         }
     }
 
